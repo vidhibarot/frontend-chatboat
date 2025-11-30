@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Core Colors - Modern cyan/blue gradient theme */
+    --background: 210 40% 98%;
+    --foreground: 220 20% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 20%;
+
+    /* Primary - Vibrant cyan/blue */
+    --primary: 195 92% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 195 100% 85%;
+
+    /* Secondary - Soft indigo */
+    --secondary: 240 60% 96%;
+    --secondary-foreground: 240 60% 30%;
+
+    /* Muted - Subtle gray */
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Accent - Energetic teal */
+    --accent: 180 85% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 195 92% 50%;
+
+    --radius: 0.75rem;
+
+    /* Chat-specific colors */
+    --chat-user-message: 195 92% 50%;
+    --chat-admin-message: 220 15% 95%;
+    --chat-bubble-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(195, 92%, 50%), hsl(210, 90%, 55%));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsla(195, 100%, 85%, 0.2), transparent 70%);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 30px hsla(195, 100%, 85%, 0.5);
+  }
+
+  .dark {
+    --background: 220 25% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 20% 14%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 20% 14%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 195 92% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 30% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 180 85% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 195 92% 50%;
+
+    --chat-user-message: 195 92% 50%;
+    --chat-admin-message: 220 15% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
