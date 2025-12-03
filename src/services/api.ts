@@ -1,17 +1,16 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3001/api';
-
+import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+console.log("opammmm", API_URL);
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Add token to requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem("authToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -21,11 +20,15 @@ api.interceptors.request.use((config) => {
 // Auth APIs
 export const authAPI = {
   login: async (email: string, password: string) => {
-    const { data } = await api.post('/auth/login', { email, password });
+    const { data } = await api.post("/auth/login", { email, password });
     return data;
   },
   register: async (email: string, password: string, fullName?: string) => {
-    const { data } = await api.post('/auth/register', { email, password, fullName });
+    const { data } = await api.post("/auth/register", {
+      email,
+      password,
+      fullName,
+    });
     return data;
   },
 };
@@ -33,11 +36,15 @@ export const authAPI = {
 // Session APIs
 export const sessionAPI = {
   getAll: async () => {
-    const { data } = await api.get('/sessions');
+    const { data } = await api.get("/sessions");
     return data;
   },
   create: async (userId: string, userName?: string, userEmail?: string) => {
-    const { data } = await api.post('/sessions', { userId, userName, userEmail });
+    const { data } = await api.post("/sessions", {
+      userId,
+      userName,
+      userEmail,
+    });
     return data;
   },
   updateStatus: async (id: string, status: string) => {
@@ -54,11 +61,11 @@ export const messageAPI = {
   },
   create: async (
     sessionId: string,
-    senderType: 'user' | 'admin',
+    senderType: "user" | "admin",
     content: string,
     senderId?: string
   ) => {
-    const { data } = await api.post('/chat/messages', {
+    const { data } = await api.post("/chat/messages", {
       sessionId,
       senderType,
       senderId,

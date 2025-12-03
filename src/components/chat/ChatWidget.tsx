@@ -19,12 +19,30 @@ export const ChatWidget = () => {
 
   const initializeChat = async () => {
     try {
-      const userId = `user_${Date.now()}`;
-      const session = await sessionAPI.create(userId);
+      // Check if we have an existing session
+      const existingSessionId = localStorage.getItem('chat_session_id');
       
-      setCurrentSessionId(session.id);
-      socketService.connect();
-      socketService.joinSession(session.id);
+      if (existingSessionId) {
+        // Restore existing session
+        setCurrentSessionId(existingSessionId);
+        socketService.connect();
+        socketService.joinSession(existingSessionId);
+      } else {
+        // Create new session
+        let userId = localStorage.getItem('chat_user_id');
+        if (!userId) {
+          userId = `user_${Date.now()}`;
+          localStorage.setItem('chat_user_id', userId);
+        }
+        
+        const session = await sessionAPI.create(userId);
+        
+        // Store session ID for persistence
+        localStorage.setItem('chat_session_id', session.id);
+        setCurrentSessionId(session.id);
+        socketService.connect();
+        socketService.joinSession(session.id);
+      }
     } catch (error) {
       console.error('Failed to initialize chat:', error);
     }

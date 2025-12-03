@@ -21,7 +21,7 @@ export const ChatView = ({ sessionId }: ChatViewProps) => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userIsTyping, setUserIsTyping] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const { admin } = useAuthStore();
 
@@ -51,10 +51,8 @@ export const ChatView = ({ sessionId }: ChatViewProps) => {
 
   // Auto-scroll to bottom
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, userIsTyping]);
 
   const loadMessages = async () => {
     try {
@@ -95,7 +93,7 @@ export const ChatView = ({ sessionId }: ChatViewProps) => {
         <CardTitle>Chat Conversation</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col h-[550px]">
-        <ScrollArea className="flex-1 pr-4" ref={scrollRef}>
+        <ScrollArea className="flex-1 pr-4">
           <div className="space-y-3">
             {messages.length === 0 ? (
               <div className="text-center text-muted-foreground text-sm py-8">
@@ -105,6 +103,7 @@ export const ChatView = ({ sessionId }: ChatViewProps) => {
               messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
             )}
             {userIsTyping && <TypingIndicator />}
+            <div ref={messagesEndRef} />
           </div>
         </ScrollArea>
 
